@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "formatter": "npx prettier --write .",
+    "formatter:check": "npx prettier --check .",
+    "formatter:watch": "onchange \"src/**/*.{js,jsx,ts,tsx}\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +19,9 @@
     "express-validator": "^7.0.1",
     "mongoose": "^7.4.1",
     "mongoose-timestamp": "^0.6.0"
+  },
+  "devDependencies": {
+    "onchange": "7.1.0",
+    "prettier": "2.8.8"
   }
 }
