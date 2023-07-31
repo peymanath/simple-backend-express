@@ -1,22 +1,22 @@
-const autoBind = require('auto-bind')
-const {validationResult} = require("express-validator");
-const User = require('../models/user')
+const autoBind = require('auto-bind');
+const { validationResult } = require('express-validator');
+const User = require('../models/user');
 module.exports = class {
     constructor() {
+        this.User = User;
         autoBind(this);
-        this.User = User
     }
 
     validationBody(req, res) {
         const result = validationResult(req);
         if (!result.isEmpty()) {
             const errors = result.array();
-            const message = []
-            errors.forEach(err => message.push(err.msg))
+            const messages = [];
+            errors.forEach(err => messages.push(err.msg));
             res.status(400).json({
-                message: "Validation Errors",
-                errors: message
-            })
+                message: 'Validation Errors',
+                data: messages,
+            });
             return false;
         }
         return true;
@@ -27,12 +27,12 @@ module.exports = class {
         next();
     }
 
-    response({res, message, code = 200, data = {},errors = null}) {
+    response({ res, message, code = 200, data = {}, errors = null }) {
         res.status(code).json({
             data,
-            errors,
             message,
-            status:code,
-        })
+            errors,
+            status: code,
+        });
     }
-}
+};
